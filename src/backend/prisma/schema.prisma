@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+  bindaryTargets = ["native", "darwin"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+  posts Post[]
+  profile Profile?
+}
+
+model Profile {
+  id    Int     @id @default(autoincrement())
+  bio   String?
+  userId Int    @unique
+  user  User    @relation(fields: [userId], references: [id])
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  content   String?
+  published Boolean  @default(false)
+  viewCount Int      @default(0)
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  Int?
+}
+
+model Champion {
+  id    String    @id
+  name  String
+  cost  Int
+  traits Trait[] @relation(references: [id])
+
+}
+
+model Trait {
+  id    String  @id
+  name  String
+  description String
+  type  String
+  sets  Json
+  champions Champion[] @relation(references: [id])
+}

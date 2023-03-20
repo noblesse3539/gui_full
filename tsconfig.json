@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "sourceMap": true,
+    "module": "ES6",
+    "target": "ES5",
+
+    "noImplicitAny": true,
+    "strict": true,
+    "jsx": "react"
+  },
+  "exclude": ["node_modules", "dist"]
+}
